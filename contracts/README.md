@@ -55,3 +55,44 @@ After setting the variable, you can run the deployment with the Sepolia network:
 ```shell
 npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
 ```
+## Contrato desplegado
+
+### CertificadorDocumentos
+
+| Campo | Valor |
+|---|---|
+| Red | Polygon Amoy Testnet |
+| Chain ID | 80002 |
+| Address | `0xA73F1BB8668e30558CC77F9d937104a58Cc64CA0` |
+| Verificado en | [Sourcify](https://sourcify.dev/server/repo-ui/80002/0xA73F1BB8668e30558CC77F9d937104a58Cc64CA0) |
+| Explorador | [Polygonscan Amoy](https://amoy.polygonscan.com/address/0xA73F1BB8668e30558CC77F9d937104a58Cc64CA0) |
+
+### ABI — funciones principales
+
+**certificar**
+```json
+{
+  "name": "certificar",
+  "inputs": [
+    { "name": "hashDoc", "type": "string" },
+    { "name": "descripcion", "type": "string" }
+  ],
+  "outputs": []
+}
+```
+
+**verificar**
+```json
+{
+  "name": "verificar",
+  "inputs": [
+    { "name": "hashDoc", "type": "string" }
+  ],
+  "outputs": [
+    { "name": "existe", "type": "bool" },
+    { "name": "descripcion", "type": "string" },
+    { "name": "certificadoPor", "type": "address" },
+    { "name": "timestamp", "type": "uint256" }
+  ]
+}
+```
