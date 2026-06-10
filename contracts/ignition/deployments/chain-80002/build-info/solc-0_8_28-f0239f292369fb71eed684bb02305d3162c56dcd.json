@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-f0239f292369fb71eed684bb02305d3162c56dcd",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.9.0"
+  },
+  "userSourceNameMap": {
+    "contracts/CertificadorDocumentos.sol": "project/contracts/CertificadorDocumentos.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/CertificadorDocumentos.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28;\n\ncontract CertificadorDocumentos {\n\n    struct Certificacion {\n        string hashDocumento;\n        string descripcion;\n        address certificadoPor;\n        uint256 timestamp;\n    }\n\n    mapping(string => Certificacion) private certificaciones;\n\n    event DocumentoCertificado(\n        string hashDocumento,\n        string descripcion,\n        address indexed certificadoPor,\n        uint256 timestamp\n    );\n\n    function certificar(string memory hashDoc, string memory descripcion) public {\n        require(\n            bytes(certificaciones[hashDoc].hashDocumento).length == 0,\n            \"Documento ya certificado\"\n        );\n\n        certificaciones[hashDoc] = Certificacion({\n            hashDocumento: hashDoc,\n            descripcion: descripcion,\n            certificadoPor: msg.sender,\n            timestamp: block.timestamp\n        });\n\n        emit DocumentoCertificado(hashDoc, descripcion, msg.sender, block.timestamp);\n    }\n\n    function verificar(string memory hashDoc) public view\n        returns (\n            bool existe,\n            string memory descripcion,\n            address certificadoPor,\n            uint256 timestamp\n        )\n    {\n        Certificacion memory c = certificaciones[hashDoc];\n\n        if (bytes(c.hashDocumento).length == 0) {\n            return (false, \"\", address(0), 0);\n        }\n\n        return (true, c.descripcion, c.certificadoPor, c.timestamp);\n    }\n}"
+      }
+    }
+  }
+}
