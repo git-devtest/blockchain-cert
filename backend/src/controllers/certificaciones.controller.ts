@@ -41,6 +41,18 @@ export const CertificacionesController = {
         data: certificacion,
       });
     } catch (error: any) {
+      if (error.code === 'INSUFFICIENT_FUNDS') {
+        res.status(503).json({ error: "Wallet sin fondos para pagar el fee" });
+        return;
+      }
+      if (error.code === 'NETWORK_ERROR' || error.code === 'SERVER_ERROR') {
+        res.status(503).json({ error: "Red blockchain no disponible" });
+        return;
+      }
+      if (error.message?.includes("Documento ya certificado")) {
+        res.status(409).json({ error: "Documento ya certificado en blockchain" });
+        return;
+      }
       res.status(500).json({ error: error.message });
     }
   },
