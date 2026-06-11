@@ -1,0 +1,64 @@
+<div class="historial-page">
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Historial de certificaciones</h2>
+      <p class="page-subtitle">Todos los documentos certificados on-chain desde esta aplicación.</p>
+    </div>
+    <button class="btn-refresh" (click)="cargar()" [disabled]="cargando()">
+      @if (cargando()) {
+        <span class="spinner"></span>
+      } @else {
+        ↻
+      }
+    </button>
+  </div>
+
+  @if (cargando()) {
+    <div class="estado-msg">Cargando certificaciones...</div>
+  }
+
+  @if (error()) {
+    <div class="result-card error">
+      <span>❌ {{ error() }}</span>
+    </div>
+  }
+
+  @if (!cargando() && !error() && certificaciones().length === 0) {
+    <div class="estado-msg">No hay certificaciones aún.</div>
+  }
+
+  @if (!cargando() && certificaciones().length > 0) {
+    <div class="tabla-wrap">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Hash documento</th>
+            <th>Descripción</th>
+            <th>Wallet</th>
+            <th>Fecha</th>
+            <th>TX</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (cert of certificaciones(); track cert.id) {
+            <tr>
+              <td class="col-id">{{ cert.id }}</td>
+              <td class="col-hash mono">{{ acortarHash(cert.hash_documento) }}</td>
+              <td class="col-desc">{{ cert.descripcion }}</td>
+              <td class="col-hash mono">{{ acortarHash(cert.wallet_address) }}</td>
+              <td class="col-fecha">{{ cert.created_at | date:'short' }}</td>
+              <td class="col-tx">
+                @if (cert.tx_hash) {
+                  <a [href]="polygonscanUrl(cert.tx_hash)" target="_blank" class="link-tx">
+                    Ver ↗
+                  </a>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
