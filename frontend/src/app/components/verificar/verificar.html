@@ -1,0 +1,84 @@
+<div class="verificar-page">
+  <h2 class="page-title">Verificar documento</h2>
+  <p class="page-subtitle">Ingresa el hash SHA-256 del documento para consultar su estado en la blockchain.</p>
+
+  <div class="card">
+    <div class="field">
+      <label>Hash SHA-256</label>
+      <input
+        type="text"
+        [value]="hash()"
+        (input)="hash.set($any($event.target).value)"
+        placeholder="64e1fbf65625147393a5fc68b248551188d5df37..."
+        [disabled]="estado() === 'buscando'">
+    </div>
+
+    <button
+      class="btn-primary"
+      (click)="verificar()"
+      [disabled]="!hash() || estado() === 'buscando'">
+      @if (estado() === 'buscando') {
+        <span class="spinner"></span> Consultando blockchain...
+      } @else {
+        Verificar
+      }
+    </button>
+  </div>
+
+  @if (estado() === 'encontrado' && resultado()) {
+    <div class="result-card success">
+      <div class="result-header">
+        <span class="result-icon">✅</span>
+        <span>Documento certificado y verificado</span>
+      </div>
+      <div class="result-grid">
+        <div class="result-row">
+          <span class="result-key">Hash</span>
+          <span class="result-val mono">{{ resultado()!.hash }}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Descripción</span>
+          <span class="result-val">{{ resultado()!.descripcion }}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Certificado por</span>
+          <span class="result-val mono">{{ resultado()!.certificadoPor }}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Fecha</span>
+          <span class="result-val">{{ resultado()!.timestamp | date:'medium' }}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">TX Hash</span>
+          <span class="result-val mono">{{ resultado()!.tx_hash }}</span>
+        </div>
+      </div>
+      <div class="result-actions">
+        <a [href]="polygonscanUrl(resultado()!.tx_hash!)" target="_blank" class="btn-secondary">
+          Ver en Polygonscan ↗
+        </a>
+        <button class="btn-ghost" (click)="reset()">Verificar otro</button>
+      </div>
+    </div>
+  }
+
+  @if (estado() === 'no_encontrado') {
+    <div class="result-card warning">
+      <div class="result-header">
+        <span class="result-icon">⚠️</span>
+        <span>Documento no encontrado en la blockchain</span>
+      </div>
+      <button class="btn-ghost" (click)="reset()">Intentar con otro hash</button>
+    </div>
+  }
+
+  @if (estado() === 'error') {
+    <div class="result-card error">
+      <div class="result-header">
+        <span class="result-icon">❌</span>
+        <span>{{ error() }}</span>
+      </div>
+      <button class="btn-ghost" (click)="reset()">Intentar de nuevo</button>
+    </div>
+  }
+</div>
