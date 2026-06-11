@@ -1,0 +1,107 @@
+<div class="certificar-page">
+  <h2 class="page-title">Certificar documento</h2>
+  <p class="page-subtitle">El hash SHA-256 del documento quedará registrado permanentemente en Polygon Amoy.</p>
+
+  <div class="card">
+    <div class="modo-tabs">
+      <button
+        class="tab"
+        [class.active]="modo() === 'texto'"
+        (click)="modo.set('texto'); nombreArchivo.set(null); bytesArchivo.set(null)">
+        Texto
+      </button>
+      <button
+        class="tab"
+        [class.active]="modo() === 'archivo'"
+        (click)="modo.set('archivo'); contenido.set('')">
+        Archivo
+      </button>
+    </div>
+
+    @if (modo() === 'texto') {
+      <div class="field">
+        <label>Contenido del documento</label>
+        <textarea
+          [value]="contenido()"
+          (input)="contenido.set($any($event.target).value)"
+          placeholder="Pega o escribe el contenido del documento..."
+          rows="6"
+          [disabled]="estado() === 'pendiente'">
+        </textarea>
+      </div>
+    }
+
+    @if (modo() === 'archivo') {
+      <div class="field">
+        <label>Seleccionar archivo</label>
+        <div class="dropzone" (click)="fileInput.click()">
+          @if (nombreArchivo()) {
+            <span class="file-name">📄 {{ nombreArchivo() }}</span>
+          } @else {
+            <span class="dropzone-hint">Haz clic para seleccionar un archivo<br><small>PDF, TXT, DOCX, imágenes...</small></span>
+          }
+        </div>
+        <input #fileInput type="file" hidden (change)="onArchivo($event)">
+      </div>
+    }
+
+    <div class="hash-preview" [class.visible]="hashPreview()">
+      <span class="hash-label">SHA-256</span>
+      <span class="hash-value">{{ hashPreview() }}</span>
+    </div>
+
+    <div class="field">
+      <label>Descripción</label>
+      <input
+        type="text"
+        [value]="descripcion()"
+        (input)="descripcion.set($any($event.target).value)"
+        placeholder="Ej: Acta de reunión junio 2026"
+        [disabled]="estado() === 'pendiente'">
+    </div>
+
+    <button
+      class="btn-primary"
+      (click)="certificar()"
+      [disabled]="(!contenido() && !bytesArchivo()) || !descripcion() || estado() === 'pendiente'">
+      @if (estado() === 'pendiente') {
+        <span class="spinner"></span> Esperando confirmación en blockchain...
+      } @else {
+        Certificar documento
+      }
+    </button>
+  </div>
+
+  @if (estado() === 'confirmado' && resultado()) {
+    <div class="result-card success">
+      <div class="result-header">
+        <span class="result-icon">✅</span>
+        <span>Documento certificado exitosamente</span>
+      </div>
+      <div class="result-row">
+        <span class="result-key">Hash</span>
+        <span class="result-val mono">{{ resultado()!.hash }}</span>
+      </div>
+      <div class="result-row">
+        <span class="result-key">TX Hash</span>
+        <span class="result-val mono">{{ resultado()!.tx_hash }}</span>
+      </div>
+      <div class="result-actions">
+        <a [href]="polygonscanUrl(resultado()!.tx_hash)" target="_blank" class="btn-secondary">
+          Ver en Polygonscan ↗
+        </a>
+        <button class="btn-ghost" (click)="reset()">Certificar otro</button>
+      </div>
+    </div>
+  }
+
+  @if (estado() === 'error') {
+    <div class="result-card error">
+      <div class="result-header">
+        <span class="result-icon">❌</span>
+        <span>{{ error() }}</span>
+      </div>
+      <button class="btn-ghost" (click)="reset()">Intentar de nuevo</button>
+    </div>
+  }
+</div>
