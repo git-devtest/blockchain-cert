@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: blockchain_cert_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: castorTt9Ue3*
+      POSTGRES_DB: blockchain_cert
+    ports:
+      - "5434:5432"
+    volumes:
+      - blockchain_cert_data:/var/lib/postgresql/data
+      - ./src/database/migrations/001_create_certificaciones.sql:/docker-entrypoint-initdb.d/001_create_certificaciones.sql
+
+volumes:
+  blockchain_cert_data:
