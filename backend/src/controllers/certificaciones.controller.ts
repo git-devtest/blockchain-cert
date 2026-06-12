@@ -6,14 +6,14 @@ import { CertificacionModel } from "../models/certificacion.model";
 export const CertificacionesController = {
   async certificar(req: Request, res: Response): Promise<void> {
     try {
-      const { contenido, descripcion } = req.body;
+      const { contenido, descripcion, hashPrecalculado } = req.body;
 
-      if (!contenido || !descripcion) {
-        res.status(400).json({ error: "contenido y descripcion son requeridos" });
+      if ((!contenido && !hashPrecalculado) || !descripcion) {
+        res.status(400).json({ error: "contenido o hashPrecalculado y descripcion son requeridos" });
         return;
       }
 
-      const hashDocumento = crypto
+      const hashDocumento = hashPrecalculado || crypto
         .createHash("sha256")
         .update(contenido)
         .digest("hex");
