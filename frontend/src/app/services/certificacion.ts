@@ -12,8 +12,9 @@ export interface Certificacion {
 }
 
 export interface CertificarRequest {
-  contenido: string;
+  contenido?: string;
   descripcion: string;
+  hashPrecalculado?: string;
 }
 
 export interface CertificarResponse {
