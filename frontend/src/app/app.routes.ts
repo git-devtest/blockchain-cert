@@ -17,6 +17,11 @@ export const routes: Routes = [
       import('./components/verificar/verificar').then(m => m.VerificarComponent)
   },
   {
+    path: 'verificar/:hash',
+    loadComponent: () =>
+      import('./components/verificar/verificar').then(m => m.VerificarComponent)
+  },
+  {
     path: 'historial',
     loadComponent: () =>
       import('./components/historial/historial').then(m => m.HistorialComponent)
