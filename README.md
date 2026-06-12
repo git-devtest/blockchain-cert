@@ -46,9 +46,9 @@ blockchain-cert/
 │   ├── Dockerfile
 │   └── docker-compose.yml
 └── frontend/           # Angular 19
-└── src/app/
-├── components/ # certificar, verificar, historial
-└── services/
+     └── src/app/
+             ├── components/ # certificar, verificar, historial
+             └── services/
 ```
 ## Correr localmente
 ### Requisitos
