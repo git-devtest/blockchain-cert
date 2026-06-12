@@ -3,14 +3,34 @@ services:
     image: postgres:15-alpine
     container_name: blockchain_cert_db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: castorTt9Ue3*
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: blockchain_cert
     ports:
       - "5434:5432"
     volumes:
       - blockchain_cert_data:/var/lib/postgresql/data
       - ./src/database/migrations/001_create_certificaciones.sql:/docker-entrypoint-initdb.d/001_create_certificaciones.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d blockchain_cert"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: blockchain_cert_backend
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://admin:${DB_PASSWORD}@db:5432/blockchain_cert
+      AMOY_RPC_URL: ${AMOY_RPC_URL}
+      AMOY_PRIVATE_KEY: ${AMOY_PRIVATE_KEY}
+      CONTRACT_ADDRESS: ${CONTRACT_ADDRESS}
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   blockchain_cert_data:
