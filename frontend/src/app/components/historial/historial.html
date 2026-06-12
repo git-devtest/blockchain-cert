@@ -47,7 +47,7 @@
               <td class="col-hash mono">{{ acortarHash(cert.hash_documento) }}</td>
               <td class="col-desc">{{ cert.descripcion }}</td>
               <td class="col-hash mono">{{ acortarHash(cert.wallet_address) }}</td>
-              <td class="col-fecha">{{ cert.created_at | date:'short' }}</td>
+              <td class="col-fecha">{{ cert.created_at | date:'short':'+0000' }}</td>
               <td class="col-tx">
                 @if (cert.tx_hash) {
                   <a [href]="polygonscanUrl(cert.tx_hash)" target="_blank" class="link-tx">
