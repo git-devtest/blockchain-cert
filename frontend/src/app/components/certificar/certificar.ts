@@ -55,14 +55,16 @@ export class CertificarComponent {
   }
 
   certificar(): void {
-    if (!this.contenido() || !this.descripcion()) return;
+    const hash = this.hashPreview();
+    if (!hash || !this.descripcion()) return;
 
     this.estado.set('pendiente');
     this.error.set(null);
     this.resultado.set(null);
 
     this.certService.certificar({
-      contenido: this.contenido(),
+      contenido: this.modo() === 'texto' ? this.contenido() : undefined,
+      hashPrecalculado: this.modo() === 'archivo' ? hash : undefined,
       descripcion: this.descripcion()
     }).subscribe({
       next: (res) => {
