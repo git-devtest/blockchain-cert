@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { CertificacionService, VerificarResponse } from '../../services/certificacion';
 
 type Estado = 'idle' | 'buscando' | 'encontrado' | 'no_encontrado' | 'error';
@@ -11,13 +12,26 @@ type Estado = 'idle' | 'buscando' | 'encontrado' | 'no_encontrado' | 'error';
   templateUrl: './verificar.html',
   styleUrl: './verificar.scss'
 })
-export class VerificarComponent {
+export class VerificarComponent implements OnInit {
   hash = signal('');
   estado = signal<Estado>('idle');
   resultado = signal<VerificarResponse | null>(null);
   error = signal<string | null>(null);
+  modoPublico = signal(false);
 
-  constructor(private certService: CertificacionService) {}
+  constructor(
+    private certService: CertificacionService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const hashParam = this.route.snapshot.paramMap.get('hash');
+    if (hashParam) {
+      this.hash.set(hashParam);
+      this.modoPublico.set(true);
+      this.verificar();
+    }
+  }
 
   polygonscanUrl(txHash: string): string {
     return `https://amoy.polygonscan.com/tx/${txHash}`;
@@ -51,5 +65,6 @@ export class VerificarComponent {
     this.estado.set('idle');
     this.resultado.set(null);
     this.error.set(null);
+    this.modoPublico.set(false);
   }
 }
