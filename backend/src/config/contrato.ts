@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ override: false });
 
 const ABI = [
   "function certificar(string memory hashDoc, string memory descripcion) public",
