@@ -5,9 +5,11 @@ Certificador de documentos on-chain sobre Polygon Amoy testnet. Permite certific
 El valor de este proyecto no es técnico sino filosófico: una vez que el hash de un documento queda registrado en una blockchain pública, **nadie puede alterarlo ni antedatarlo**, ni siquiera el administrador del sistema. Cualquier persona en el mundo puede verificar la autenticidad de un documento sin depender de una autoridad central.
 
 ## Arquitectura
+```
 Frontend (Angular) → Backend (Node.js/Express) → Smart Contract (Solidity/Polygon Amoy)
 ↓
 PostgreSQL (historial)
+```
 | Capa | Tecnología |
 |---|---|
 | Frontend | Angular 19, SCSS |
