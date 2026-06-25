@@ -1,6 +1,7 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { CertificacionService, Certificacion } from '../../services/certificacion';
+import { StickerService } from '../../services/sticker';
 
 @Component({
   selector: 'app-historial',
@@ -12,11 +13,19 @@ export class HistorialComponent implements OnInit {
   certificaciones = signal<Certificacion[]>([]);
   cargando = signal(true);
   error = signal<string | null>(null);
+  menuAbierto = signal<number | null>(null);
 
-  constructor(private certService: CertificacionService) {}
+  constructor(
+    private certService: CertificacionService,
+    private stickerService: StickerService
+  ) {}
 
   ngOnInit(): void {
     this.cargar();
+  }
+
+  toggleMenu(id: number): void {
+    this.menuAbierto.set(this.menuAbierto() === id ? null : id);
   }
 
   cargar(): void {
@@ -37,6 +46,18 @@ export class HistorialComponent implements OnInit {
 
   polygonscanUrl(txHash: string): string {
     return `https://amoy.polygonscan.com/tx/${txHash}`;
+  }
+
+  async descargarSticker(cert: Certificacion): Promise<void> {
+    await this.stickerService.generar({
+      hash: cert.hash_documento,
+      descripcion: cert.descripcion,
+      createdAt: cert.created_at!
+    });
+  }
+
+  verificarUrl(hash: string): string {
+    return `/verificar/${hash}`;
   }
 
   acortarHash(hash: string): string {
