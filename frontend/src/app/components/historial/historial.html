@@ -37,7 +37,7 @@
             <th>Descripción</th>
             <th>Wallet</th>
             <th>Fecha</th>
-            <th>TX</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -48,12 +48,25 @@
               <td class="col-desc">{{ cert.descripcion }}</td>
               <td class="col-hash mono">{{ acortarHash(cert.wallet_address) }}</td>
               <td class="col-fecha">{{ cert.created_at | date:'short':'+0000' }}</td>
-              <td class="col-tx">
-                @if (cert.tx_hash) {
-                  <a [href]="polygonscanUrl(cert.tx_hash)" target="_blank" class="link-tx">
-                    Ver ↗
-                  </a>
-                }
+              <td class="col-acciones">
+                <div class="dropdown" [class.open]="menuAbierto() === cert.id">
+                  <button class="btn-acciones" (click)="toggleMenu(cert.id!)">
+                    Acciones ▾
+                  </button>
+                  @if (menuAbierto() === cert.id) {
+                    <div class="dropdown-menu">
+                      <a [href]="polygonscanUrl(cert.tx_hash!)" target="_blank" class="dropdown-item" (click)="menuAbierto.set(null)">
+                        Ver en Polygonscan ↗
+                      </a>
+                      <a [href]="verificarUrl(cert.hash_documento)" target="_blank" class="dropdown-item" (click)="menuAbierto.set(null)">
+                        Verificar
+                      </a>
+                      <button class="dropdown-item" (click)="descargarSticker(cert); menuAbierto.set(null)">
+                        Descargar sticker
+                      </button>
+                    </div>
+                  }
+                </div>
               </td>
             </tr>
           }
