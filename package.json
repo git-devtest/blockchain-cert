@@ -1,0 +1,28 @@
+{
+  "name": "blockchain-cert",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Certificador de documentos on-chain sobre Polygon Amoy Testnet. El proyecto actual funciona como un MVP funcional para certificar documentos (texto o archivos), calcular su hash SHA-256, registrarlo en un smart contract Solidity y conservar el historial en PostgreSQL.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently -n DOCKER,FRONTEND -c blue,green \"npm run dev:docker\" \"npm run dev:frontend\"",
+    "dev:docker": "cd backend && docker compose up",
+    "dev:frontend": "cd frontend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/git-devtest/blockchain-cert.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/git-devtest/blockchain-cert/issues"
+  },
+  "homepage": "https://github.com/git-devtest/blockchain-cert#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
