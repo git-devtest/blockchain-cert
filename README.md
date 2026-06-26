@@ -105,24 +105,33 @@ AMOY_PRIVATE_KEY=tu_private_key_de_metamask
 CONTRACT_ADDRESS=0xA73F1BB8668e30558CC77F9d937104a58Cc64CA0
 ```
 
-### 3. Levantar base de datos y backend
+### 3. Levantar todo el proyecto
+Desde la raíz del repositorio:
+
 ```bash
-cd backend
-docker compose up -d
 npm install
 npm run dev
 ```
 
-### 4. Levantar frontend
-```bash
-cd frontend
-npm install
-npm start
-```
-Abrir http://localhost:4200
+Esto levanta backend + PostgreSQL en Docker y el frontend Angular simultáneamente.
 
-### 5. Documentación de la API
-Con el backend corriendo, abrir http://localhost:3000/api-docs
+- Frontend:     `http://localhost:4200`
+- API docs:     `http://localhost:3000/api-docs`
+- Health check: `http://localhost:3000/health`
+
+El endpoint `/health` valida conectividad con la base de datos y con la red Polygon Amoy:
+
+```json
+{
+  "status": "ok",
+  "timestamp": "2026-06-26T04:24:12.878Z",
+  "servicios": {
+    "api": "ok",
+    "database": "ok",
+    "blockchain": "ok"
+  }
+}
+```
 
 ## Endpoints principales
 - POST /api/certificar
