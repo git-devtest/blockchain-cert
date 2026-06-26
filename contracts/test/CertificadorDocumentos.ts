@@ -4,8 +4,8 @@ import type { ContractFactory } from "ethers";
 
 describe("CertificadorDocumentos", function () {
   async function deploy() {
-    const connection = await hre.network.connect();
-    const ethers = connection.ethers;
+    const network = await hre.network.getOrCreate();
+    const ethers = network.ethers;
     const [owner, otherAccount] = await ethers.getSigners();
     const Cert: ContractFactory = await ethers.getContractFactory("CertificadorDocumentos");
     const cert = await Cert.deploy() as any;
