@@ -42,7 +42,4 @@ export default defineConfig({
       accounts: [configVariable("AMOY_PRIVATE_KEY")],
     },
   },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-},
 });
