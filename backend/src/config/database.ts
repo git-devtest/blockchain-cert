@@ -5,10 +5,7 @@ dotenv.config({ override: false });
 
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-});
-
-pool.on('connect', async (client) => {
-  await client.query("SET timezone = 'America/Bogota'");
+  options: "-c timezone=America/Bogota",
 });
 
 pool.on("error", (err) => {
