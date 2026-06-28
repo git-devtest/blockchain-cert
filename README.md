@@ -133,6 +133,21 @@ El endpoint `/health` valida conectividad con la base de datos y con la red Poly
 }
 ```
 
+### Aplicar cambios en el backend
+
+El backend corre dentro de un contenedor Docker. El código se copia a la imagen en el momento del build, por lo tanto **los cambios en `backend/src` no se reflejan automáticamente**.
+
+Si modificas el backend, reconstruye la imagen antes de levantar de nuevo:
+
+```bash
+cd backend
+docker compose build
+cd ..
+npm run dev
+```
+
+Los cambios en el frontend (Angular) sí se reflejan en caliente sin pasos adicionales.
+
 ## Endpoints principales
 - POST /api/certificar
 - GET /api/verificar/:hash
