@@ -60,6 +60,16 @@
         [disabled]="estado() === 'pendiente'">
     </div>
 
+    <div class="field">
+      <label>Identificador <span class="opcional">(opcional)</span></label>
+      <input
+        type="text"
+        [value]="identificador()"
+        (input)="identificador.set($any($event.target).value)"
+        placeholder="CBC-CIRCULAR-00001-2026"
+        [disabled]="estado() === 'pendiente'">
+    </div>
+
     <button
       class="btn-primary"
       (click)="certificar()"
