@@ -42,7 +42,7 @@
           <div class="publico-icono">✅</div>
           <div class="publico-titulo">Documento auténtico y verificado</div>
           <div class="publico-subtitulo">
-            Este documento fue certificado el <strong>{{ resultado()!.timestamp | date:'medium' }}</strong>
+            Este documento fue certificado el <strong>{{ formatearFecha(resultado()!.timestamp) }}</strong>
             y su autenticidad está garantizada por la red blockchain Polygon.
             El contenido no ha sido modificado desde su certificación.
           </div>
@@ -54,7 +54,7 @@
           </div>
           <div class="publico-dato">
             <span class="publico-dato-label"><strong>Fecha de certificación: </strong></span>
-            <span class="publico-dato-valor">{{ resultado()!.timestamp | date:'medium' }}</span>
+            <span class="publico-dato-valor">{{ formatearFecha(resultado()!.timestamp) }}</span>
           </div>
           <div class="publico-dato">
             <span class="publico-dato-label"><strong>Huella digital del documento (SHA-256): </strong></span>
@@ -90,7 +90,7 @@
           </div>
           <div class="result-row">
             <span class="result-key">Fecha</span>
-            <span class="result-val">{{ resultado()!.timestamp | date:'medium' }}</span>
+            <span class="result-val">{{ formatearFecha(resultado()!.timestamp) }}</span>
           </div>
           <div class="result-row">
             <span class="result-key">TX Hash</span>
