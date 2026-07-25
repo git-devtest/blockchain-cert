@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,7 +7,7 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Ubuntu Sans', system-ui, -apple-system, sans-serif;
   background: #f5f4f0;
   color: #1a1a18;
   min-height: 100vh;
@@ -46,7 +48,7 @@ body {
       &:hover { color: #1a1a18; }
       &.active {
         color: #1a1a18;
-        border-bottom: 2px solid #0F6E56;
+        border-bottom: 2px solid #2f5175;
       }
     }
   }
