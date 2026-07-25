@@ -25,5 +25,15 @@ export const routes: Routes = [
     path: 'historial',
     loadComponent: () =>
       import('./components/historial/historial').then(m => m.HistorialComponent)
-  }
+  },
+  {
+    path: 'identificador',
+    loadComponent: () =>
+      import('./components/identificador/identificador').then(m => m.IdentificadorComponent)
+  },
+  {
+    path: 'consultar/:codigo',
+    loadComponent: () =>
+      import('./components/verificar/verificar').then(m => m.VerificarComponent)
+  },
 ];
