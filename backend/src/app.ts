@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger";
 import certificacionesRoutes from "./routes/certificaciones.routes";
+import identificadoresRoutes from "./routes/identificadores.routes";
 import { pool } from "./config/database";
 import { contrato } from "./config/contrato";
 
@@ -44,5 +45,6 @@ app.get("/health", async (req, res) => {
 });
 
 app.use("/api", certificacionesRoutes);
+app.use("/api/identificadores", identificadoresRoutes);
 
 export default app;
