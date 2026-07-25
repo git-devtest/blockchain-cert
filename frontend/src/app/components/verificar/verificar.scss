@@ -46,7 +46,7 @@
 
       &:focus {
         outline: none;
-        border-color: #0F6E56;
+        border-color: #2f5175;
         background: #ffffff;
       }
 
@@ -55,7 +55,7 @@
   }
 
   .btn-primary {
-    background: #0F6E56;
+    background: #2f5175;
     color: white;
     border: none;
     border-radius: 8px;
@@ -69,7 +69,7 @@
     gap: 8px;
     transition: background 0.2s;
 
-    &:hover:not(:disabled) { background: #0a5a45; }
+    &:hover:not(:disabled) { background: #243f5c; }
     &:disabled { opacity: 0.5; cursor: not-allowed; }
   }
 
