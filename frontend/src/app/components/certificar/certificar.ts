@@ -17,6 +17,7 @@ type Modo = 'texto' | 'archivo';
 export class CertificarComponent {
   contenido = signal('');
   descripcion = signal('');
+  identificador = signal('');
   estado = signal<Estado>('idle');
   resultado = signal<CertificarResponse | null>(null);
   error = signal<string | null>(null);
@@ -69,7 +70,8 @@ export class CertificarComponent {
     this.certService.certificar({
       contenido: this.modo() === 'texto' ? this.contenido() : undefined,
       hashPrecalculado: this.modo() === 'archivo' ? hash : undefined,
-      descripcion: this.descripcion()
+      descripcion: this.descripcion(),
+      identificador: this.identificador() || undefined
     }).subscribe({
       next: (res) => {
         this.resultado.set(res);
@@ -101,5 +103,6 @@ export class CertificarComponent {
     this.error.set(null);
     this.nombreArchivo.set(null);
     this.bytesArchivo.set(null);
+    this.identificador.set('');
   }
 }
