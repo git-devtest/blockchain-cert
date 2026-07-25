@@ -35,6 +35,13 @@ export interface VerificarResponse {
   mensaje?: string;
 }
 
+export interface CertificarRequest {
+  contenido?: string;
+  descripcion: string;
+  hashPrecalculado?: string;
+  identificador?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,4 +61,17 @@ export class CertificacionService {
   listar(): Observable<Certificacion[]> {
     return this.http.get<Certificacion[]>(`${this.apiUrl}/certificaciones`);
   }
+
+  listarTipos(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/identificadores/tipos`);
+  }
+
+  generarIdentificador(tipo_documento_id: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/identificadores/generar`, { tipo_documento_id });
+  }
+
+  consultarIdentificador(codigo: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/identificadores/consultar/${codigo}`);
+  }
+
 }
