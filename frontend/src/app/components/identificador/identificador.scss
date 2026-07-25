@@ -1,0 +1,218 @@
+.identificador-page {
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1a1a18;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: #5f5e5a;
+    margin-bottom: 1.5rem;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #5f5e5a;
+    }
+
+    select {
+      background: #f5f4f0;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      color: #1a1a18;
+      font-size: 14px;
+      font-family: inherit;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: #2f5175;
+        background: #ffffff;
+      }
+
+      &:disabled { opacity: 0.5; }
+    }
+  }
+
+  .btn-primary {
+    background: #2f5175;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+
+    &:hover:not(:disabled) { background: #243f5c; }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .result-card {
+    margin-top: 1rem;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &.success {
+      background: #f0f4f8;
+      border: 1px solid rgba(47, 81, 117, 0.25);
+    }
+
+    &.error {
+      background: #fef2f2;
+      border: 1px solid rgba(220, 38, 38, 0.25);
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a18;
+    }
+  }
+
+  .codigo-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .codigo-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #5f5e5a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .codigo-valor-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .codigo-valor {
+      font-size: 22px;
+      font-weight: 700;
+      color: #2f5175;
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+  }
+
+  .parrafo-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 12px;
+
+    .parrafo-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #5f5e5a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .parrafo-texto {
+      font-size: 13px;
+      color: #1a1a18;
+      line-height: 1.6;
+      font-style: italic;
+    }
+  }
+
+  .btn-copiar {
+    background: #2f5175;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-self: flex-start;
+
+    &:hover { background: #243f5c; }
+  }
+
+  .instrucciones {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #1a1a18;
+
+    p { margin-bottom: 8px; }
+
+    ol {
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      li { line-height: 1.6; }
+    }
+  }
+
+  .btn-ghost {
+    background: none;
+    color: #5f5e5a;
+    border: none;
+    padding: 8px 0;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.2s;
+    align-self: flex-start;
+
+    &:hover { color: #1a1a18; }
+  }
+}

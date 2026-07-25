@@ -1,0 +1,75 @@
+<div class="identificador-page">
+  <h2 class="page-title">Generar identificador</h2>
+  <p class="page-subtitle">Genera un identificador único para tu documento antes de certificarlo.</p>
+
+  <div class="card">
+    <div class="field">
+      <label>Tipo de documento</label>
+      <select
+        [value]="tipoSeleccionado()"
+        (change)="tipoSeleccionado.set(+$any($event.target).value || null)"
+        [disabled]="estado() === 'generando'">
+        <option value="">Selecciona un tipo...</option>
+        @for (tipo of tipos(); track tipo.id) {
+          <option [value]="tipo.id">{{ tipo.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <button
+      class="btn-primary"
+      (click)="generar()"
+      [disabled]="!tipoSeleccionado() || estado() === 'generando'">
+      @if (estado() === 'generando') {
+        <span class="spinner"></span> Generando...
+      } @else {
+        Generar identificador
+      }
+    </button>
+  </div>
+
+  @if (estado() === 'generado' && resultado()) {
+    <div class="result-card success">
+      <div class="result-header">
+        <span class="result-icon">✅</span>
+        <span>Identificador generado exitosamente</span>
+      </div>
+
+      <div class="codigo-box">
+        <span class="codigo-label">Identificador</span>
+        <div class="codigo-valor-wrap">
+          <span class="codigo-valor">{{ resultado().identificador.codigo }}</span>
+          <button class="btn-copiar" (click)="copiarCodigo()">Copiar</button>
+        </div>
+      </div>
+
+      <div class="parrafo-box">
+        <span class="parrafo-label">Párrafo para el documento</span>
+        <p class="parrafo-texto">{{ resultado().parrafo }}</p>
+        <button class="btn-copiar" (click)="copiarParrafo()">Copiar párrafo</button>
+      </div>
+
+      <div class="instrucciones">
+        <p>📋 <strong>Pasos a seguir:</strong></p>
+        <ol>
+          <li>Copia el identificador y agrégalo en la esquina superior derecha del documento.</li>
+          <li>Copia el párrafo y agrégalo al pie de página del documento.</li>
+          <li>Guarda el documento como PDF.</li>
+          <li>Ve a <strong>Certificar</strong>, sube el PDF e ingresa el identificador.</li>
+        </ol>
+      </div>
+
+      <button class="btn-ghost" (click)="reset()">Generar otro</button>
+    </div>
+  }
+
+  @if (estado() === 'error') {
+    <div class="result-card error">
+      <div class="result-header">
+        <span class="result-icon">❌</span>
+        <span>{{ error() }}</span>
+      </div>
+      <button class="btn-ghost" (click)="reset()">Intentar de nuevo</button>
+    </div>
+  }
+</div>
