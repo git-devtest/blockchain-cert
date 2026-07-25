@@ -2,11 +2,12 @@ import { Request, Response } from "express";
 import crypto from "crypto";
 import { contrato } from "../config/contrato";
 import { CertificacionModel } from "../models/certificacion.model";
+import { IdentificadorModel } from "../models/identificador.model";
 
 export const CertificacionesController = {
   async certificar(req: Request, res: Response): Promise<void> {
     try {
-      const { contenido, descripcion, hashPrecalculado } = req.body;
+      const { contenido, descripcion, hashPrecalculado, identificador } = req.body;
 
       if ((!contenido && !hashPrecalculado) || !descripcion) {
         res.status(400).json({ error: "contenido o hashPrecalculado y descripcion son requeridos" });
@@ -34,10 +35,20 @@ export const CertificacionesController = {
         tx_hash: tx.hash,
       });
 
+      // Vincular identificador si fue proporcionado
+      if (identificador && certificacion.id) {
+        try {
+          await IdentificadorModel.vincularCertificacion(identificador, certificacion.id);
+        } catch (err) {
+          console.warn(`No se pudo vincular el identificador ${identificador}:`, err);
+        }
+      }
+
       res.status(201).json({
         mensaje: "Documento certificado exitosamente",
         hash: hashDocumento,
         tx_hash: tx.hash,
+        identificador: identificador || null,
         data: certificacion,
       });
     } catch (error: any) {
