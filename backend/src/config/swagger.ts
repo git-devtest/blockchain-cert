@@ -11,7 +11,19 @@ const options = {
     servers: [
       {
         url: "http://localhost:3000",
-        description: "Servidor local",
+        description: "Servidor Backend local",
+      },
+      {
+        url: "http://localhost:3000/health",
+        description: "Estado de salud, servidor backend local",
+      },
+      {
+        url: "http://localhost:3000/api-docs",
+        description: "Este documento (servidor)",
+      },
+      {
+        url: "http://localhost:4200",
+        description: "Servidor Frontend local",
       },
     ],
   },
