@@ -1,0 +1,63 @@
+<div class="auditoria-page">
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Auditoría</h2>
+      <p class="page-subtitle">Registro de actividad de la aplicación.</p>
+    </div>
+    <button class="btn-refresh" (click)="cargar()" [disabled]="cargando()">
+      @if (cargando()) {
+        <span class="spinner"></span>
+      } @else {
+        ↻
+      }
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="alerta error">❌ {{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <div class="estado-msg">Cargando registros...</div>
+  }
+
+  @if (!cargando() && registros().length === 0) {
+    <div class="estado-msg">No hay registros de auditoría.</div>
+  }
+
+  @if (!cargando() && registros().length > 0) {
+    <div class="tabla-wrap">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Usuario</th>
+            <th>Rol</th>
+            <th>Actividad</th>
+            <th>IP</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (reg of registros(); track reg.id) {
+            <tr>
+              <td class="col-id">{{ reg.id }}</td>
+              <td class="col-fecha">{{ formatearFecha(reg.created_at) }}</td>
+              <td class="col-usuario">
+                <span class="usuario-nombre">{{ reg.usuario_nombre || '-' }}</span>
+                <span class="usuario-email">{{ reg.usuario_email || '' }}</span>
+              </td>
+              <td class="col-rol">{{ reg.rol || '-' }}</td>
+              <td class="col-actividad">
+                <span class="badge-actividad" [class]="badgeActividad(reg.actividad)">
+                  {{ reg.actividad }}
+                </span>
+              </td>
+              <td class="col-ip">{{ reg.ip_address || '-' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
