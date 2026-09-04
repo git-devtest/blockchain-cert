@@ -59,3 +59,48 @@ body {
   margin: 0 auto;
   padding: 2.5rem 1.5rem;
 }
+
+.navbar-usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-decoration: none;
+  color: #1a1a18;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.2s;
+
+  &:hover { color: #2f5175; }
+
+  .navbar-rol {
+    font-size: 10px;
+    font-weight: 400;
+    color: #9c9a92;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  color: #5f5e5a;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #fef2f2;
+    border-color: rgba(220,38,38,0.25);
+    color: #991b1b;
+  }
+}
