@@ -1,0 +1,134 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="login-logo-icon">⛓</span>
+      <span class="login-logo-text">Blockchain Cert</span>
+    </div>
+
+    @if (modo() === 'login') {
+      <h2 class="login-titulo">Iniciar sesión</h2>
+
+      <div class="field">
+        <label>Email</label>
+        <input
+          type="email"
+          [value]="email()"
+          (input)="email.set($any($event.target).value)"
+          placeholder="usuario@ejemplo.com"
+          [disabled]="cargando()">
+      </div>
+
+      <div class="field">
+        <label>Contraseña</label>
+        <input
+          type="password"
+          [value]="password()"
+          (input)="password.set($any($event.target).value)"
+          placeholder="••••••••"
+          [disabled]="cargando()"
+          (keyup.enter)="login()">
+      </div>
+
+      @if (error()) {
+        <div class="alerta error">❌ {{ error() }}</div>
+      }
+
+      <button
+        class="btn-primary"
+        (click)="login()"
+        [disabled]="!email() || !password() || cargando()">
+        @if (cargando()) {
+          <span class="spinner"></span> Ingresando...
+        } @else {
+          Ingresar
+        }
+      </button>
+
+      <button class="btn-link" (click)="modo.set('recuperar'); error.set(null)">
+        ¿Olvidaste tu contraseña?
+      </button>
+    }
+
+    @if (modo() === 'recuperar') {
+      <h2 class="login-titulo">Recuperar contraseña</h2>
+      <p class="login-subtitulo">Ingresa tu email y te enviaremos instrucciones.</p>
+
+      <div class="field">
+        <label>Email</label>
+        <input
+          type="email"
+          [value]="email()"
+          (input)="email.set($any($event.target).value)"
+          placeholder="usuario@ejemplo.com"
+          [disabled]="cargando()">
+      </div>
+
+      @if (error()) {
+        <div class="alerta error">❌ {{ error() }}</div>
+      }
+
+      @if (exito()) {
+        <div class="alerta exito">✅ {{ exito() }}</div>
+      }
+
+      <button
+        class="btn-primary"
+        (click)="recuperar()"
+        [disabled]="!email() || cargando()">
+        @if (cargando()) {
+          <span class="spinner"></span> Enviando...
+        } @else {
+          Enviar instrucciones
+        }
+      </button>
+
+      <button class="btn-link" (click)="modo.set('login'); error.set(null); exito.set(null)">
+        ← Volver al login
+      </button>
+    }
+
+    @if (modo() === 'cambiar') {
+      <h2 class="login-titulo">Nueva contraseña</h2>
+
+      <div class="field">
+        <label>Nueva contraseña</label>
+        <input
+          type="password"
+          [value]="nuevaPassword()"
+          (input)="nuevaPassword.set($any($event.target).value)"
+          placeholder="Mínimo 8 caracteres"
+          [disabled]="cargando()">
+      </div>
+
+      <div class="field">
+        <label>Confirmar contraseña</label>
+        <input
+          type="password"
+          [value]="confirmarPassword()"
+          (input)="confirmarPassword.set($any($event.target).value)"
+          placeholder="Repite la contraseña"
+          [disabled]="cargando()"
+          (keyup.enter)="cambiar()">
+      </div>
+
+      @if (error()) {
+        <div class="alerta error">❌ {{ error() }}</div>
+      }
+
+      @if (exito()) {
+        <div class="alerta exito">✅ {{ exito() }}</div>
+      }
+
+      <button
+        class="btn-primary"
+        (click)="cambiar()"
+        [disabled]="!nuevaPassword() || !confirmarPassword() || cargando()">
+        @if (cargando()) {
+          <span class="spinner"></span> Actualizando...
+        } @else {
+          Actualizar contraseña
+        }
+      </button>
+    }
+  </div>
+</div>
