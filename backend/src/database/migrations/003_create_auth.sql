@@ -1,13 +1,15 @@
 CREATE TABLE IF NOT EXISTS usuarios (
-    id              SERIAL PRIMARY KEY,
-    nombre          VARCHAR(100) NOT NULL,
-    email           VARCHAR(150) NOT NULL UNIQUE,
-    password_hash   VARCHAR(255) NOT NULL,
-    rol             VARCHAR(20) NOT NULL DEFAULT 'certificador'
-                    CHECK (rol IN ('admin', 'certificador')),
-    activo          BOOLEAN DEFAULT true,
-    created_at      TIMESTAMP DEFAULT NOW(),
-    updated_at      TIMESTAMP DEFAULT NOW()
+    id                  SERIAL PRIMARY KEY,
+    nombre              VARCHAR(100) NOT NULL,
+    email               VARCHAR(150) NOT NULL UNIQUE,
+    password_hash       VARCHAR(255) NOT NULL,
+    rol                 VARCHAR(20) NOT NULL DEFAULT 'certificador'
+                        CHECK (rol IN ('admin', 'certificador')),
+    activo              BOOLEAN DEFAULT true,
+    reset_token         VARCHAR(255),
+    reset_token_expira  TIMESTAMP,
+    created_at          TIMESTAMP DEFAULT NOW(),
+    updated_at          TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS auditoria (
