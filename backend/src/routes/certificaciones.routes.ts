@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { CertificacionesController } from "../controllers/certificaciones.controller";
+import { autenticar, registrarActividad } from "../middleware/auth.middleware";
 
 const router = Router();
 
@@ -34,7 +35,7 @@ const router = Router();
  *       503:
  *         description: Wallet sin fondos o red no disponible
  */
-router.post("/certificar", CertificacionesController.certificar);
+router.post("/certificar", autenticar, CertificacionesController.certificar);
 
 /**
  * @openapi
@@ -65,6 +66,6 @@ router.get("/verificar/:hash", CertificacionesController.verificar);
  *       200:
  *         description: Lista de certificaciones
  */
-router.get("/certificaciones", CertificacionesController.listar);
+router.get("/certificaciones", autenticar, CertificacionesController.listar);
 
 export default router;
