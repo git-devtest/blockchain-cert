@@ -1,0 +1,64 @@
+<div class="usuarios-page">
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Usuarios</h2>
+      <p class="page-subtitle">Gestión de usuarios del sistema.</p>
+    </div>
+    <button class="btn-refresh" (click)="cargar()" [disabled]="cargando()">
+      @if (cargando()) {
+        <span class="spinner"></span>
+      } @else {
+        ↻
+      }
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="alerta error">❌ {{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <div class="estado-msg">Cargando usuarios...</div>
+  }
+
+  @if (!cargando() && usuarios().length === 0) {
+    <div class="estado-msg">No hay usuarios registrados.</div>
+  }
+
+  @if (!cargando() && usuarios().length > 0) {
+    <div class="tabla-wrap">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Creado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (usuario of usuarios(); track usuario.id) {
+            <tr>
+              <td class="col-id">{{ usuario.id }}</td>
+              <td class="col-nombre">{{ usuario.nombre }}</td>
+              <td class="col-email">{{ usuario.email }}</td>
+              <td class="col-rol">
+                <span class="badge-rol" [class]="usuario.rol">
+                  {{ usuario.rol }}
+                </span>
+              </td>
+              <td class="col-estado">
+                <span class="badge-estado" [class.inactivo]="!usuario.activo">
+                  {{ usuario.activo ? 'Activo' : 'Inactivo' }}
+                </span>
+              </td>
+              <td class="col-fecha">{{ formatearFecha(usuario.created_at) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,156 @@
+.usuarios-page {
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1a1a18;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: #5f5e5a;
+  }
+
+  .btn-refresh {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    color: #1a1a18;
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+
+    &:hover:not(:disabled) { background: #f5f4f0; }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0,0,0,0.15);
+    border-top-color: #2f5175;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .estado-msg {
+    font-size: 14px;
+    color: #9c9a92;
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  .alerta {
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+
+    &.error {
+      background: #fef2f2;
+      border: 1px solid rgba(220,38,38,0.25);
+      color: #991b1b;
+    }
+  }
+
+  .tabla-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #ffffff;
+
+    thead tr {
+      background: #f5f4f0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: #5f5e5a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: background 0.15s;
+
+      &:hover { background: #f5f4f0; }
+      &:last-child { border-bottom: none; }
+    }
+
+    td {
+      padding: 10px 14px;
+      color: #1a1a18;
+      vertical-align: middle;
+    }
+
+    .col-id { color: #9c9a92; width: 40px; }
+    .col-email { font-size: 12px; color: #5f5e5a; }
+    .col-fecha { white-space: nowrap; color: #5f5e5a; font-size: 12px; }
+  }
+
+  .badge-rol {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &.admin {
+      background: #e8f0f8;
+      color: #2f5175;
+    }
+
+    &.certificador {
+      background: #f0f4f8;
+      color: #5f7a96;
+    }
+  }
+
+  .badge-estado {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #edfaf5;
+    color: #0F6E56;
+
+    &.inactivo {
+      background: #fef2f2;
+      color: #991b1b;
+    }
+  }
+}
