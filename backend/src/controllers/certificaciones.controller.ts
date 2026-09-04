@@ -3,6 +3,7 @@ import crypto from "crypto";
 import { contrato } from "../config/contrato";
 import { CertificacionModel } from "../models/certificacion.model";
 import { IdentificadorModel } from "../models/identificador.model";
+import { AuditoriaModel } from "../models/auditoria.model";
 
 export const CertificacionesController = {
   async certificar(req: Request, res: Response): Promise<void> {
@@ -34,7 +35,18 @@ export const CertificacionesController = {
         wallet_address: await (contrato.runner as any).getAddress(),
         tx_hash: tx.hash,
       });
-
+      // Registrar en auditoría
+      const usuarioId = (req as any).usuario?.id;
+      const usuarioRol = (req as any).usuario?.rol;
+      if (usuarioId) {
+        await AuditoriaModel.registrar({
+          usuario_id: usuarioId,
+          rol: usuarioRol,
+          actividad: "CERTIFICAR",
+          detalle: { hash: hashDocumento, descripcion, identificador: identificador || null },
+          ip_address: req.ip
+        });
+      }
       // Vincular identificador si fue proporcionado
       if (identificador && certificacion.id) {
         try {
