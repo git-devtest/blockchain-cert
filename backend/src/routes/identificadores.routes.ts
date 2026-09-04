@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { IdentificadoresController } from "../controllers/identificadores.controller";
+import { autenticar } from "../middleware/auth.middleware";
 
 const router = Router();
 
@@ -12,7 +13,7 @@ const router = Router();
  *       200:
  *         description: Lista de tipos de documento
  */
-router.get("/tipos", IdentificadoresController.listarTipos);
+router.get("/tipos", autenticar, IdentificadoresController.listarTipos);
 
 /**
  * @openapi
@@ -37,7 +38,7 @@ router.get("/tipos", IdentificadoresController.listarTipos);
  *       400:
  *         description: tipo_documento_id es requerido
  */
-router.post("/generar", IdentificadoresController.generar);
+router.post("/generar", autenticar, IdentificadoresController.generar);
 
 /**
  * @openapi
