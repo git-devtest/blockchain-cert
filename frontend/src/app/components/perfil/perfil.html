@@ -1,0 +1,39 @@
+<div class="perfil-page">
+  <h2 class="page-title">Mi perfil</h2>
+  <p class="page-subtitle">Información de tu cuenta.</p>
+
+  @if (usuario()) {
+    <div class="card">
+      <div class="perfil-avatar">
+        <span class="avatar-iniciales">
+          {{ usuario()!.nombre.charAt(0).toUpperCase() }}
+        </span>
+      </div>
+
+      <div class="perfil-datos">
+        <div class="dato-row">
+          <span class="dato-label">Nombre</span>
+          <span class="dato-valor">{{ usuario()!.nombre }}</span>
+        </div>
+        <div class="dato-row">
+          <span class="dato-label">Email</span>
+          <span class="dato-valor">{{ usuario()!.email }}</span>
+        </div>
+        <div class="dato-row">
+          <span class="dato-label">Rol</span>
+          <span class="dato-valor">
+            <span class="badge-rol" [class]="usuario()!.rol">
+              {{ usuario()!.rol }}
+            </span>
+          </span>
+        </div>
+        <div class="dato-row">
+          <span class="dato-label">Estado</span>
+          <span class="dato-valor">
+            <span class="badge-estado">Activo</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  }
+</div>

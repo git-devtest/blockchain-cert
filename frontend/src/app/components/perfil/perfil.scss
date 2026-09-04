@@ -1,0 +1,103 @@
+.perfil-page {
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1a1a18;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: #5f5e5a;
+    margin-bottom: 1.5rem;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    margin: 0 auto;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .perfil-avatar {
+    display: flex;
+    justify-content: center;
+
+    .avatar-iniciales {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #2f5175;
+      color: white;
+      font-size: 28px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .perfil-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .dato-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+
+    &:last-child { border-bottom: none; }
+  }
+
+  .dato-label {
+    font-size: 13px;
+    color: #5f5e5a;
+    font-weight: 500;
+  }
+
+  .dato-valor {
+    font-size: 14px;
+    color: #1a1a18;
+    font-weight: 400;
+  }
+
+  .badge-rol {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &.admin {
+      background: #e8f0f8;
+      color: #2f5175;
+    }
+
+    &.certificador {
+      background: #f0f4f8;
+      color: #5f7a96;
+    }
+  }
+
+  .badge-estado {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #edfaf5;
+    color: #0F6E56;
+  }
+}
