@@ -1,59 +1,86 @@
-# Frontend
+# Frontend — Blockchain Cert
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.9.
+Aplicación web en Angular 21 para certificar documentos on-chain, verificar hashes, generar identificadores y administrar usuarios. La guía de arranque del monorepo está en el [README raíz](../README.md).
 
-## Development server
+Generada con [Angular CLI](https://github.com/angular/angular-cli) 21.2.9. Estilos en SCSS. El hash SHA-256 se calcula en el navegador (`@noble/hashes`) antes de enviarlo al API.
 
-To start a local development server, run:
+## Requisitos
 
-```bash
-ng serve
-```
+- Node.js v22 LTS
+- Backend en `http://localhost:3000` (el proxy reenvía `/api`)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Desarrollo
 
 ```bash
-ng generate component component-name
+npm install
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+`npm start` ejecuta `ng serve` con `proxy.conf.json`. Abre `http://localhost:4200`. Los cambios se recargan en caliente.
+
+Si el API ya está en Compose (`docker compose up` en `backend/`), basta con `npm start` aquí. El atajo de la raíz (`npm run dev`) levanta Compose y este frontend a la vez; no lo uses si Compose ya está en ejecución.
+
+## Proxy
+
+Las peticiones a `/api` se reenvían a `http://localhost:3000`. Las llamadas autenticadas envían cookies (`withCredentials`) porque la sesión es un JWT en cookie httpOnly.
+
+## Rutas
+
+| Ruta | Acceso | Descripción |
+|---|---|---|
+| `/login` | Público | Inicio de sesión y recuperación de contraseña |
+| `/cambiar-password/:token` | Público | Nueva contraseña con token de recuperación |
+| `/verificar`, `/verificar/:hash` | Público | Verificación por hash |
+| `/consultar/:codigo` | Público | Consulta por identificador (`CBC-TIPO-00001-2026`) |
+| `/certificar` | Autenticado | Texto o archivo, hash previo y certificación |
+| `/historial` | Autenticado | Historial, Polygonscan y sticker PDF |
+| `/identificador` | Autenticado | Generar código y párrafo de autenticidad |
+| `/perfil` | Autenticado | Datos de la sesión |
+| `/admin/auditoria` | Rol `admin` | Registro de actividad |
+| `/admin/usuarios` | Rol `admin` | Listado de usuarios |
+
+La raíz redirige a `/certificar`. Sin sesión, `authGuard` envía a `/login`. Las rutas de admin exigen `rol: admin`.
+
+## Estructura
+
+```text
+src/app
+├── app.routes.ts
+├── guards/auth-guard.ts
+├── services
+│   ├── auth.ts
+│   ├── certificacion.ts
+│   └── sticker.ts          # PDF + QR (jspdf, qrcode)
+└── components
+    ├── admin/auditoria
+    ├── admin/usuarios
+    ├── certificar
+    ├── historial
+    ├── identificador
+    ├── login
+    ├── perfil
+    └── verificar
+```
+
+## Build
 
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
+El resultado queda en `dist/`. `npm run watch` compila en modo development.
 
-To build the project run:
+## Tests
+
+Pruebas unitarias con Vitest:
 
 ```bash
-ng build
+npm test
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+No hay suite e2e configurada.
 
-## Running unit tests
+## Recursos
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Angular CLI](https://angular.dev/tools/cli)
+- API y Swagger: `http://localhost:3000/api-docs`
