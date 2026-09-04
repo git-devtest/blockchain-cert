@@ -15,6 +15,7 @@ export interface CertificarRequest {
   contenido?: string;
   descripcion: string;
   hashPrecalculado?: string;
+  identificador?: string;
 }
 
 export interface CertificarResponse {
@@ -35,23 +36,17 @@ export interface VerificarResponse {
   mensaje?: string;
 }
 
-export interface CertificarRequest {
-  contenido?: string;
-  descripcion: string;
-  hashPrecalculado?: string;
-  identificador?: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class CertificacionService {
   private apiUrl = '/api';
+  private opts = { withCredentials: true };
 
   constructor(private http: HttpClient) {}
 
   certificar(data: CertificarRequest): Observable<CertificarResponse> {
-    return this.http.post<CertificarResponse>(`${this.apiUrl}/certificar`, data);
+    return this.http.post<CertificarResponse>(`${this.apiUrl}/certificar`, data, this.opts);
   }
 
   verificar(hash: string): Observable<VerificarResponse> {
@@ -59,15 +54,15 @@ export class CertificacionService {
   }
 
   listar(): Observable<Certificacion[]> {
-    return this.http.get<Certificacion[]>(`${this.apiUrl}/certificaciones`);
+    return this.http.get<Certificacion[]>(`${this.apiUrl}/certificaciones`, this.opts);
   }
 
   listarTipos(): Observable<any[]> {
-  return this.http.get<any[]>(`${this.apiUrl}/identificadores/tipos`);
+  return this.http.get<any[]>(`${this.apiUrl}/identificadores/tipos`, this.opts);
   }
 
   generarIdentificador(tipo_documento_id: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/identificadores/generar`, { tipo_documento_id });
+    return this.http.post<any>(`${this.apiUrl}/identificadores/generar`, { tipo_documento_id }, this.opts);
   }
 
   consultarIdentificador(codigo: string): Observable<any> {
