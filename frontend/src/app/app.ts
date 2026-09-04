@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from './services/auth';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,9 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
+
 export class App {
   protected title = 'Blockchain Cert';
+
+  constructor(public authService: AuthService) {}
 }
