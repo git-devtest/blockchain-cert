@@ -12,8 +12,10 @@ services:
     volumes:
       - blockchain_cert_data:/var/lib/postgresql/data
       - ./src/database/migrations/001_create_certificaciones.sql:/docker-entrypoint-initdb.d/001_create_certificaciones.sql
+      - ./src/database/migrations/002_create_identificadores.sql:/docker-entrypoint-initdb.d/002_create_identificadores.sql
+      - ./src/database/migrations/003_create_auth.sql:/docker-entrypoint-initdb.d/003_create_auth.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d blockchain_cert"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d blockchain_cert"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -25,10 +27,12 @@ services:
       - "3000:3000"
     environment:
       PORT: 3000
-      DATABASE_URL: postgresql://admin:${DB_PASSWORD}@db:5432/blockchain_cert
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/blockchain_cert
       AMOY_RPC_URL: ${AMOY_RPC_URL}
       AMOY_PRIVATE_KEY: ${AMOY_PRIVATE_KEY}
       CONTRACT_ADDRESS: ${CONTRACT_ADDRESS}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES: ${JWT_EXPIRES}
     depends_on:
       db:
         condition: service_healthy
