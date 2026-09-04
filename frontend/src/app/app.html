@@ -3,12 +3,26 @@
     <span class="brand-icon">⛓</span>
     <span class="brand-name">Blockchain Cert</span>
   </div>
-  <div class="navbar-links">
-    <a routerLink="/certificar" routerLinkActive="active">Certificar</a>
-    <a routerLink="/verificar" routerLinkActive="active">Verificar</a>
-    <a routerLink="/historial" routerLinkActive="active">Historial</a>
-    <a routerLink="/identificador" routerLinkActive="active">Identificador</a>
-  </div>
+   
+   @if (authService.estaAutenticado()) {
+    <div class="navbar-links">
+      <a routerLink="/certificar" routerLinkActive="active">Certificar</a>
+      <a routerLink="/verificar" routerLinkActive="active">Verificar</a>
+      <a routerLink="/historial" routerLinkActive="active">Historial</a>
+      <a routerLink="/identificador" routerLinkActive="active">Identificador</a>
+      @if (authService.esAdmin()) {
+        <a routerLink="/admin/auditoria" routerLinkActive="active">Auditoría</a>
+        <a routerLink="/admin/usuarios" routerLinkActive="active">Usuarios</a>
+      }
+    </div>
+    <div class="navbar-usuario">
+      <a routerLink="/perfil" class="navbar-perfil">
+        {{ authService.usuarioActual()?.nombre }}
+        <span class="navbar-rol">{{ authService.usuarioActual()?.rol }}</span>
+      </a>
+      <button class="btn-logout" (click)="authService.logout()">Salir</button>
+    </div>
+  }
 </nav>
 
 <main class="container">
